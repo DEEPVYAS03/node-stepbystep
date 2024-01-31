@@ -11,14 +11,22 @@ const ProductList = () => {
   }, [setProducts])
 
   const getProducts = async () => {
-    let response = await axios.get('http://localhost:5000/products')
+    let response = await axios.get('http://localhost:5000/products',{
+      headers:{
+        authorization:`bearer ${JSON.parse(localStorage.getItem('token'))}`
+      }
+    })
     let data = await response.data
     setProducts(data)
     console.log(products)
   }
 
   const deleteProduct = async (id) => {
-    let response = await axios.delete(`http://localhost:5000/deleteProduct/${id}`)
+    let response = await axios.delete(`http://localhost:5000/deleteProduct/${id}`,{
+      headers:{
+        authorization:`bearer ${JSON.parse(localStorage.getItem('token'))}`
+      }
+    })
     let data = await response.data
     console.log(data)
     getProducts()
@@ -28,7 +36,11 @@ const ProductList = () => {
     console.log(e.target.value)
     let key = e.target.value
     if (key) {
-      let response = await axios.get(`http://localhost:5000/search/${key}`)
+      let response = await axios.get(`http://localhost:5000/search/${key}`,{
+        headers:{
+          authorization:`bearer ${JSON.parse(localStorage.getItem('token'))}`
+        }
+      })
       let data = await response.data
       if (data) {
         setProducts(data)

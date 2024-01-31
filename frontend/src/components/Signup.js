@@ -11,25 +11,15 @@ const Signup = () => {
 
 
   const collectData = async () => {
-    // using fetch api to send data to backend 
-    // let result = await fetch('http://localhost:5000/register', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ name, email, password }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   }
-    // })
-    // result = await result.json()
-    // console.warn('Fetch api data ' + result)
-
-
     // axios
 
     const response = await axios.post('http://localhost:5000/register', { name, email, password })
     const data = response.data
-    console.warn(data)
-    if (response.status === 200) {
-      localStorage.setItem('user-info', JSON.stringify(data))
+    console.warn(data.result)
+    console.warn(data.auth)
+    if (data) {
+      localStorage.setItem('user-info', JSON.stringify(data.result))
+      localStorage.setItem('token', JSON.stringify(data.auth))
       navigate('/login')
     }
   }
@@ -39,7 +29,7 @@ const Signup = () => {
     if (auth) {
       navigate('/')
     }
-  })
+  },[])
 
 
   return (

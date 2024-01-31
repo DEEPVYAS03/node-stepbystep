@@ -21,7 +21,11 @@ const UpdateProduct = () => {
 
     const getProduct = async () => {
         console.warn(params)
-        let response = await axios.get(`http://localhost:5000/product/${params.id}`)
+        let response = await axios.get(`http://localhost:5000/product/${params.id}`,{
+            headers:{
+              authorization:`bearer ${JSON.parse(localStorage.getItem('token'))}`
+            }
+          })
         let data = await response.data
         setName(data.name)
         setPrice(data.price)
@@ -29,7 +33,11 @@ const UpdateProduct = () => {
         setCompany(data.company)
     }
     const updateProduct = async () => {
-        let response = await axios.put(`http://localhost:5000/updateProduct/${params.id}`, { name, price, category, company })
+        let response = await axios.put(`http://localhost:5000/updateProduct/${params.id}`, { name, price, category, company },{
+            headers:{
+              authorization:`bearer ${JSON.parse(localStorage.getItem('token'))}`
+            }
+          })
         console.log(response.data)
         navigate('/')
     }

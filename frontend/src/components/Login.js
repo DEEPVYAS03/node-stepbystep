@@ -21,8 +21,9 @@ const Login = () => {
         
         const response = await axios.post('http://localhost:5000/login', { email, password })
         const data = response.data  
-        if(data.name){
-            localStorage.setItem('user-info', JSON.stringify(data))
+        if(data.auth){
+            localStorage.setItem('user-info', JSON.stringify(data.user))
+            localStorage.setItem('token', JSON.stringify(data.auth))
             navigate('/')
         }
         else{

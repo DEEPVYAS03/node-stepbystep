@@ -24,7 +24,11 @@ const AddProduct = () => {
             return false
         }
 
-        const response = await axios.post('http://localhost:5000/addProduct', { name, price, category, company, userId })
+        const response = await axios.post('http://localhost:5000/addProduct', { name, price, category, company, userId },{
+            headers:{
+              authorization:`bearer ${JSON.parse(localStorage.getItem('token'))}`
+            }
+          })
         const data = response.data
         console.warn(data)
     }
